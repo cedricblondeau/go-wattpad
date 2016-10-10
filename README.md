@@ -1,4 +1,4 @@
-# go-wattpad
+# go-wattpad [![Build Status](https://travis-ci.org/cedricblondeau/go-wattpad.svg)](https://travis-ci.org/cedricblondeau/go-wattpad)
 
 > Simple and definitely not full-featured Wattpad API wrapper written in Go.
 
