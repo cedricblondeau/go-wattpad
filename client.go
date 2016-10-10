@@ -1,6 +1,10 @@
 package wattpad
 
-import "net/http"
+import (
+	"encoding/json"
+	"io/ioutil"
+	"net/http"
+)
 
 const (
 	apiURL        = "https://api.wattpad.com/v4"
@@ -24,6 +28,35 @@ type Client struct {
 type param struct {
 	name  string
 	value string
+}
+
+func (c *Client) exec(req *http.Request, envelope interface{}) error {
+	resp, err := c.Client.Do(req)
+	if err != nil {
+		return err
+	}
+	blob, err := read(resp)
+	if err != nil {
+		return err
+	}
+	return unmarshal(blob, &envelope)
+}
+
+func unmarshal(blob []byte, envelope interface{}) error {
+	err := json.Unmarshal(blob, &envelope)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func read(resp *http.Response) ([]byte, error) {
+	defer resp.Body.Close()
+	blob, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	return blob, nil
 }
 
 func (c *Client) buildRequest(method string, endpoint string, params ...param) *http.Request {
