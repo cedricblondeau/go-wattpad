@@ -1,0 +1,10 @@
+*.o
+*.a
+*.so
+_obj
+_test
+*.exe
+*.test
+*.prof
+*.out
+vendor/
