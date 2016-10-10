@@ -30,6 +30,17 @@ type param struct {
 	value string
 }
 
+// NewStories returns a list of new stories
+func (c *Client) NewStories() ([]Story, error) {
+	req := c.buildRequest("GET", "stories", param{name: "filter", value: "new"}, param{name: "limit", value: "20"})
+	var envelope StoriesEnvelope
+	err := c.exec(req, &envelope)
+	if err != nil {
+		return nil, err
+	}
+	return envelope.Stories, nil
+}
+
 // Categories returns a list of categories
 func (c *Client) Categories() ([]Category, error) {
 	req := c.buildRequest("GET", "categories")
