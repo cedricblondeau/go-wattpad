@@ -30,6 +30,17 @@ type param struct {
 	value string
 }
 
+// Categories returns a list of categories
+func (c *Client) Categories() ([]Category, error) {
+	req := c.buildRequest("GET", "categories")
+	var envelope CategoriesEnvelope
+	err := c.exec(req, &envelope)
+	if err != nil {
+		return nil, err
+	}
+	return envelope.Categories, nil
+}
+
 func (c *Client) exec(req *http.Request, envelope interface{}) error {
 	resp, err := c.Client.Do(req)
 	if err != nil {
