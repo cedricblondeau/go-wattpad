@@ -21,13 +21,13 @@ import (
 
 // Get a category by tag
 c := wattpad.NewClient("YOUR_API_KEY_HERE")
-fantasy, _ := c.Category("fantasy")
-// TODO: Deal with err
+fantasy, err := c.Category("fantasy")
+// You should check err variable here
 fmt.Printf("%d - %s\n", fantasy.ID, fantasy.Name)
 
 // Get new stories
-stories, _ := c.NewStories()
-// TODO: Deal with err
+stories, err := c.NewStories()
+// You should check err variable here
 for _, story := range stories {
   fmt.Printf("%d - %s by %s\n", story.ID, story.Title, story.Author)
 }
