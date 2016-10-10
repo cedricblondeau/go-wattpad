@@ -41,6 +41,17 @@ func (c *Client) Categories() ([]Category, error) {
 	return envelope.Categories, nil
 }
 
+// Category returns the most popular category for the given tag
+func (c *Client) Category(tag string) (Category, error) {
+	req := c.buildRequest("GET", "categories", param{name: "tag", value: tag})
+	var envelope CategoriesEnvelope
+	err := c.exec(req, &envelope)
+	if err != nil {
+		return Category{}, err
+	}
+	return envelope.Categories[0], nil
+}
+
 func (c *Client) exec(req *http.Request, envelope interface{}) error {
 	resp, err := c.Client.Do(req)
 	if err != nil {
