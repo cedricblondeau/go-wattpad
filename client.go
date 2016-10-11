@@ -76,15 +76,7 @@ func (c *Client) exec(req *http.Request, envelope interface{}) error {
 	if err != nil {
 		return err
 	}
-	return unmarshal(blob, &envelope)
-}
-
-func unmarshal(blob []byte, envelope interface{}) error {
-	err := json.Unmarshal(blob, &envelope)
-	if err != nil {
-		return err
-	}
-	return nil
+	return json.Unmarshal(blob, &envelope)
 }
 
 func read(resp *http.Response) ([]byte, error) {
