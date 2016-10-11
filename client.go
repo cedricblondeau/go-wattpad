@@ -60,6 +60,10 @@ func (c *Client) Category(tag string) (Category, error) {
 	if err != nil {
 		return Category{}, err
 	}
+	categories := envelope.Categories
+	if len(categories) < 1 {
+		return Category{}, nil
+	}
 	return envelope.Categories[0], nil
 }
 
